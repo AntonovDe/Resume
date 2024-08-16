@@ -56,8 +56,8 @@
 // })
 
 // 3.1 тест. Не корректная регистрация нового пользователя. Пустой email
-describe('3.1', () => {
-  it('passes', () => {
+describe('test 3.1', () => {
+  it('check register page', () => {
     cy.visit('https://indydemo.cg28577.tmweb.ru/register') // заходим на сайт. форма регистрации
     cy.get('#name').type('Denis11')
 
