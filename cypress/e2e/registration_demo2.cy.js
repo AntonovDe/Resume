@@ -70,3 +70,5 @@ describe('test 3.1', () => {
     document.querySelectorAll('#email')
   })
 })
+
+// проверка
