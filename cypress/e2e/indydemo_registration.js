@@ -1,13 +1,13 @@
+// const $site = https://indydemo.cg28577.tmweb.ru
+ 
 
-
-
-// // 1 тест. Регистрация
-// describe('1', () => {
-//   it('passes', () => {
-//     cy.visit('https://indydemo.cg28577.tmweb.ru/') // заходим на сайт
-//     cy.get('nav').should('contain', 'Register').contains('Register').click() // ищем заголовок "регистрация" нажимаем на него.
-//   })
-// })
+// 1 тест. Регистрация
+describe('1', () => {
+  it('passes', () => {
+    cy.visit('$site') // заходим на сайт
+    cy.get('nav').should('contain', 'Register').contains('Register').click() // ищем заголовок "регистрация" нажимаем на него.
+  })
+})
 
 // const email_id = 69
 
@@ -55,21 +55,18 @@
 //   })
 // })
 
-// 3.1 тест. Не корректная регистрация нового пользователя. Пустой email
-describe('test 3.1', () => {
-  it('check register page', () => {
-    cy.visit('https://indydemo.cg28577.tmweb.ru/register') // заходим на сайт. форма регистрации
-    cy.get('#name').type('Denis11')
+// // 3.1 тест. Не корректная регистрация нового пользователя. Пустой email
+// describe('test 3.1', () => {
+//   it('check register page', () => {
+//     cy.visit('https://indydemo.cg28577.tmweb.ru/register') // заходим на сайт. форма регистрации
+//     cy.get('#name').type('Denis11')
 
-    cy.get('#password').type('123456789')
-    cy.get('#password_confirmation').type('123456789')
-    cy.get('form div:nth-child(5) button').click()
-    cy.get("#email").then(($el) => $el[0].validationMessage).should("eq", "Заполните это поле.");
-    const array =['query','asddf', 5]
-    array[1]
-    document.querySelectorAll('#email')
-  })
-})
-
-// проверка
-// и еще одна
+//     cy.get('#password').type('123456789')
+//     cy.get('#password_confirmation').type('123456789')
+//     cy.get('form div:nth-child(5) button').click()
+//     cy.get("#email").then(($el) => $el[0].validationMessage).should("eq", "Заполните это поле.");
+//     const array =['query','asddf', 5]
+//     array[1]
+//     document.querySelectorAll('#email')
+//   })
+// })
