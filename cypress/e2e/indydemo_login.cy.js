@@ -1,8 +1,7 @@
 // Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
 // Команда в terminal для запуска Cypress: npx cypress open
 
-const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для основного сайта
-
+const $site = "https://indydemo.cg28577.tmweb.ru"; // Переменная для основного сайта
 
 // // _________________________1_________________________________
 
@@ -15,7 +14,6 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 // })
 
 // // _________________________2_________________________________
-
 
 // describe('2.1 Наличие лого и верная ссылка на него', () => {
 //   it('passes', () => {
@@ -44,7 +42,7 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 //   it('passes', () => {
 //     cy.visit($site+'/login')
 //     cy.get('#remember').then(($el) => $el[0]._modelValue).should('be.false')
-//     cy.get('#remember_label').then(($el) => $el[0].innerText).should("eq", "Запомнить меня") 
+//     cy.get('#remember_label').then(($el) => $el[0].innerText).should("eq", "Запомнить меня")
 //   })
 // })
 
@@ -143,7 +141,6 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 //   })
 // })
 
-
 // describe('3.2.6 Не корретная авторизация. Email: корректный. Пароль: не корректный (короткий. 6 символов)', () => {
 //   it('passes', () => {
 //     cy.visit($site+'/login')
@@ -207,7 +204,6 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 //   })
 // })
 
-
 // гугловские подсказки. 2019 года
 // let cookieValue
 // describe('5 Cookies', () => {
@@ -221,7 +217,6 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 //         // .. go ahead inside this `then` callback
 //     })
 //   })
-
 
 // здесь сообщение об ошибке отображается
 
@@ -251,7 +246,7 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 // // пустой лог. без ошибок.
 // describe('5 Cookies', () => {
 //   it('passes', () => {
-    
+
 //     cy.visit($site+'/login')
 //     cy.getCookie('XSRF-TOKEN').then((cookie) => {
 //       let cookieValue
@@ -262,12 +257,31 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 // })
 
 // константа не меняется, остается значение 0, которое и отображается в log
-describe('5 Cookies', () => {
-  it('passes', () => {
-    cy.visit($site+'/login');
-    cy.getCookie('XSRF-TOKEN').should('have.property', 'value').then((cookie) => {
-      const cookieValue = cookie.value;
-      cy.log(cookieValue);
-    })
-  })
-})
+describe("5 Cookies", () => {
+    it("passes", () => {
+        let token;
+        let newToken;
+
+        cy.visit($site + "/login");
+
+        cy.getCookie("XSRF-TOKEN")
+            .should("exist")
+            .then((cookie) => {
+                token = cookie.value;
+                cy.log(token);
+            });
+
+        cy.get("#email").type("test@list.ru");
+        cy.get("#password").type("123456789");
+        cy.get("#btn_login").click();
+        cy.url().should("eq", $site + "/dashboard");
+
+        cy.getCookie("XSRF-TOKEN")
+            .should("exist")
+            .then((cookie) => {
+                newToken = cookie.value;
+                cy.log(newToken);
+                cy.wrap(newToken).should('not.equal', token);
+            });
+    });
+});
