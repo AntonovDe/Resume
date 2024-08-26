@@ -224,25 +224,17 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 
 
 // здесь сообщение об ошибке отображается
-// let cookieValue;
+
 // describe('5 Cookies', () => {
 //   it('passes', () => {
+//     let cookieValue;
 //     cy.visit($site+'/login')
-// cy.getCookie('XSRF-TOKEN')
-//     .should('have.property', 'value', 'Dummy value')
+//     cy.getCookie('XSRF-TOKEN')
+//     // .should('have.property', 'value', 'Dummy value')
 //     .then((cookie) => {
 //         cookieValue = cookie.value;
+//         cy.log(cookieValue);
 //     })
-// cy.log(cookieValue);
-// })
-// })
-
-// пустой лог. без ошибок.
-// let cookieValue;
-// describe('5 Cookies', () => {
-//   it('passes', () => {
-//     cy.visit($site+'/login')
-//     cy.getCookie('XSRF-TOKEN').should('have.property', 'value').then((cookie) => {cookieValue = cookie.value}, cy.log(cookieValue))
 //   })
 // })
 
@@ -251,16 +243,31 @@ const $site = 'https://indydemo.cg28577.tmweb.ru' // Переменная для
 // describe('5 Cookies', () => {
 //   it('passes', () => {
 //     cy.visit($site+'/login')
-//     cy.getCookie('XSRF-TOKEN').should('have.property', 'value').then((cookie) => {cookieValue = cookie.value})
-//     cy.log(cookieValue)
+//     cy.getCookie('XSRF-TOKEN')
+// .should('have.property', 'value').then((cookie) => {cookieValue = cookie.value}, cy.log(cookieValue))
+//   })
+// })
+
+// // пустой лог. без ошибок.
+// describe('5 Cookies', () => {
+//   it('passes', () => {
+    
+//     cy.visit($site+'/login')
+//     cy.getCookie('XSRF-TOKEN').then((cookie) => {
+//       let cookieValue
+//       cookieValue = cookie.value
+//       cy.log(cookieValue)
+//     })
 //   })
 // })
 
 // константа не меняется, остается значение 0, которое и отображается в log
-const cookieValue = 0
 describe('5 Cookies', () => {
   it('passes', () => {
-    cy.visit($site+'/login')
-    cy.getCookie('XSRF-TOKEN').should('have.property', 'value').then((cookie) => {const cookieValue = cookie.value}, cy.log(cookieValue))
+    cy.visit($site+'/login');
+    cy.getCookie('XSRF-TOKEN').should('have.property', 'value').then((cookie) => {
+      const cookieValue = cookie.value;
+      cy.log(cookieValue);
+    })
   })
 })
