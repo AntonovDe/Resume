@@ -109,5 +109,3 @@ describe('3.6 Не корректный сброс пароля. Не корре
       cy.get("form").then(($el) => $el[0].children[0]).invoke('text').should('contain', "We can't find a user with that email address.")
   })
 })
-
-//длотыфваылтв
