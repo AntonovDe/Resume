@@ -1,7 +1,10 @@
 // Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
 // Команда в terminal для запуска Cypress: npx cypress open
 
+import Env from "./command/Env";
+
 const $site = "https://indydemo.cg28577.tmweb.ru"; // Переменная для основного сайта
+const random = Cypress._.random(0, 1e8); // Создание уникального номера id
 
 // _________________________1_________________________________
 
@@ -76,11 +79,10 @@ describe('2.5 Наличие ссылки "Уже зарегестрирован
 
 // _________________________3.1_________________________________
 
-const $unicid = () => Cypress._.random(0, 1e4); // Создание уникального номера id
-const $id = $unicid(); // Уникальный номер id (несколько аккаунтов под одним id не создаются, потому что почта считается одинаковой)
 
 describe("3.1.1 тест. Корректная регистрация. Пароль: цифры. Имя: латиница и цифры", () => {
     it("passes", () => {
+        const $id = random + 1; // Уникальный номер id (несколько аккаунтов под одним id не создаются, потому что почта считается одинаковой)
         cy.visit($site + "/register"); // заходим на сайт. форма регистрации
         cy.get("#name").type("Denis" + $id); // находим поле имя и пишем в новое имя
 
@@ -92,14 +94,13 @@ describe("3.1.1 тест. Корректная регистрация. Паро�
     });
 });
 
-const $unicid2 = () => Cypress._.random(0, 1e4);
-const $id2 = $unicid2();
 
 describe("3.1.2 Корректная регистрация. Пароль: цифры, латинские буквы и символ. Имя: латиница и цифры", () => {
     it("passes", () => {
+        const $id = random + 2
         cy.visit($site + "/register"); //
-        cy.get("#name").type("Denis" + $id2);
-        cy.get("#email").type("alatus" + $id2 + "@list.ru");
+        cy.get("#name").type("Denis" + $id);
+        cy.get("#email").type("alatus" + $id + "@list.ru");
         cy.get("#password").type("123456asd/");
         cy.get("#password_confirmation").type("123456asd/");
         cy.get("#btn_registration").click();
@@ -107,14 +108,13 @@ describe("3.1.2 Корректная регистрация. Пароль: ци�
     });
 });
 
-const $unicid3 = () => Cypress._.random(0, 1e4);
-const $id3 = $unicid3();
 
 describe("3.1.3 Корректная регистрация. Пароль: цифры, латинские буквы и символ. Имя: на русском и цифры", () => {
     it("passes", () => {
+        const $id = random + 3
         cy.visit($site + "/register");
-        cy.get("#name").type("Денис" + $id3);
-        cy.get("#email").type("alatus" + $id3 + "@list.ru");
+        cy.get("#name").type("Денис" + $id);
+        cy.get("#email").type("alatus" + $id + "@list.ru");
         cy.get("#password").type("123456asd/");
         cy.get("#password_confirmation").type("123456asd/");
         cy.get("#btn_registration").click();
@@ -140,14 +140,14 @@ describe("3.2.1 Не корректная регистрация. Пустой e
     });
 });
 
-const $unicid4 = () => Cypress._.random(0, 1e4);
-const $id4 = $unicid4();
+
 
 describe("3.2.2 Не корректная регистрация. Не корретный email (Знак @)", () => {
     it("passes", () => {
+        const $id = random + 4
         cy.visit($site + "/register");
         cy.get("#name").type("Denis11");
-        cy.get("#email").type("alatus" + $id4);
+        cy.get("#email").type("alatus" + $id);
         cy.get("#password").type("123456789");
         cy.get("#password_confirmation").type("123456789");
         cy.get("#btn_registration").click();
@@ -156,7 +156,7 @@ describe("3.2.2 Не корректная регистрация. Не корр�
             .should(
                 "eq",
                 'Адрес электронной почты должен содержать символ "@". В адресе "alatus' +
-                    $id4 +
+                    $id +
                     '" отсутствует символ "@".'
             );
         cy.get("#email")
@@ -167,15 +167,17 @@ describe("3.2.2 Не корректная регистрация. Не корр�
 
 describe("3.2.3 Не корректная регистрация. Не корретный email (текст после @)", () => {
     it("passes", () => {
+        const $id = random + 4
+        const email = "alatus" + $id + "@"
         cy.visit($site + "/register");
         cy.get("#name").type("Denis11");
-        cy.get("#email").type("alatus" + $id4 + "@");
+        cy.get("#email").type(email);
         cy.get("#password").type("123456789");
         cy.get("#password_confirmation").type("123456789");
         cy.get("#btn_registration").click();
         cy.get("#email")
             .then(($el) => $el[0].validationMessage)
-            .should("eq", 'Введите часть адреса после символа "@". Адрес "alatus' + $id4 + '@" неполный.');
+            .should("eq", Env.testfunct(email));
         cy.get("#email")
             .then(($el) => $el[0].validity.valid)
             .should("be.false");
@@ -213,8 +215,9 @@ describe("3.2.5 Не корректная регистрация. Повторн
 
 describe("3.2.6 Не корректная регистрация. Пустой name ", () => {
     it("passes", () => {
+        const $id = random + 4
         cy.visit($site + "/register");
-        cy.get("#email").type("alatus" + $id4 + "@list.ru");
+        cy.get("#email").type("alatus" + $id + "@list.ru");
         cy.get("#password").type("123456789");
         cy.get("#password_confirmation").type("123456789");
         cy.get("#btn_registration").click();
@@ -229,9 +232,10 @@ describe("3.2.6 Не корректная регистрация. Пустой n
 
 describe("3.2.7 Не корректная регистрация. Пустой password ", () => {
     it("passes", () => {
+        const $id = random + 4
         cy.visit($site + "/register");
         cy.get("#name").type("Denis11");
-        cy.get("#email").type("alatus" + $id4 + "@list.ru");
+        cy.get("#email").type("alatus" + $id + "@list.ru");
         cy.get("#password_confirmation").type("123456789");
         cy.get("#btn_registration").click();
         cy.get("#password")

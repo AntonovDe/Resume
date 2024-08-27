@@ -44,4 +44,8 @@ export default class Env {
         /** Страница авторизации */
         login: "/login",
     };
+
+    static testfunct = (email) => {
+        return `Введите часть адреса после символа "@". Адрес "${email}" неполный.`;
+    };
 }
