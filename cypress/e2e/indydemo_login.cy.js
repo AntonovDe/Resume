@@ -75,7 +75,22 @@ const $site = "https://indydemo.cg28577.tmweb.ru"; // Переменная дл�
 
 // // _________________________3.1_________________________________
 
-// describe('3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры', () => {
+import {login} from '../e2e/command/indydemo_com_login.cy.js' // добавление (импорт) последовательности действий для авторизации пользователя
+
+describe('3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры', () => { // корректная авторизация через добавленную функцию (набор запросов).
+  it('passes', () => {
+    // cy.visit($site+'/login')
+    // cy.get('#email').type('test@list.ru')
+    // cy.get('#password').type('123456789')
+    // cy.get('#btn_login').click()
+    login('test@list.ru','123456789')
+    cy.url().should('eq', $site + '/dashboard')
+    
+  })
+})
+
+
+// describe('3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры', () => { // корректная авторизация через набор запросов
 //   it('passes', () => {
 //     cy.visit($site+'/login')
 //     cy.get('#email').type('test@list.ru')
@@ -256,32 +271,32 @@ const $site = "https://indydemo.cg28577.tmweb.ru"; // Переменная дл�
 //   })
 // })
 
-// константа не меняется, остается значение 0, которое и отображается в log
-describe("5 Cookies", () => {
-    it("passes", () => {
-        let token;
-        let newToken;
+// // константа не меняется, остается значение 0, которое и отображается в log
+// describe("5 Cookies", () => {
+//     it("passes", () => {
+//         let token;
+//         let newToken;
 
-        cy.visit($site + "/login");
+//         cy.visit($site + "/login");
 
-        cy.getCookie("XSRF-TOKEN")
-            .should("exist")
-            .then((cookie) => {
-                token = cookie.value;
-                cy.log(token);
-            });
+//         cy.getCookie("XSRF-TOKEN")
+//             .should("exist")
+//             .then((cookie) => {
+//                 token = cookie.value;
+//                 cy.log(token);
+//             });
 
-        cy.get("#email").type("test@list.ru");
-        cy.get("#password").type("123456789");
-        cy.get("#btn_login").click();
-        cy.url().should("eq", $site + "/dashboard");
+//         cy.get("#email").type("test@list.ru");
+//         cy.get("#password").type("123456789");
+//         cy.get("#btn_login").click();
+//         cy.url().should("eq", $site + "/dashboard");
 
-        cy.getCookie("XSRF-TOKEN")
-            .should("exist")
-            .then((cookie) => {
-                newToken = cookie.value;
-                cy.log(newToken);
-                cy.wrap(newToken).should('not.equal', token);
-            });
-    });
-});
+//         cy.getCookie("XSRF-TOKEN")
+//             .should("exist")
+//             .then((cookie) => {
+//                 newToken = cookie.value;
+//                 cy.log(newToken);
+//                 cy.wrap(newToken).should('not.equal', token);
+//             });
+//     });
+// });
