@@ -1,35 +1,33 @@
-import { login } from "./command/auth.cy.js"; // добавление (импорт) последовательности действий для авторизации пользователя
+import { login } from "./command/auth.js"; // добавление (импорт) последовательности действий для авторизации пользователя
+import Env from "./command/Env.js";
 
-// Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
-// Команда в terminal для запуска Cypress: npx cypress open
+/**
+ * Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
+ * Команда в terminal для запуска Cypress: npx cypress open
+ */
 
-/** Переменная для основного сайта */
-const $site = "https://indydemo.cg28577.tmweb.ru";
-
-// _________________________1_________________________________
+/** 1. Проверка открытия страницы */
 
 describe("1. Проверка перехода на сайт, на форму авторизации", () => {
     it("passes", () => {
-        cy.visit($site);
+        cy.visit(Env.url.domain);
         cy.get("#login").click();
-        cy.url().should("eq", $site + "/login");
+        cy.url().should("eq", Env.url.domain + Env.url.login);
     });
 });
 
-// _________________________2_________________________________
+/** 2. Проверка элементов страницы */
 
 describe("2.1 Наличие лого и верная ссылка на него", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("svg")
-            .then(($el) => $el[0].attributes[1].value)
-            .should("eq", "http://www.w3.org/2000/svg");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("svg").then(($el) => $el[0].attributes[1].value);
     });
 });
 
 describe("2.2 Наличие всех текстов, заголовков", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#email_label")
             .then(($el) => $el[0].innerText)
             .should("eq", "Эл. почта");
@@ -39,7 +37,7 @@ describe("2.2 Наличие всех текстов, заголовков", () 
 
 describe("2.3 Наличие всех плейсхолдеров", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#email")
             .then(($el) => $el[0].placeholder)
             .should("eq", "адрес эл. почты");
@@ -51,7 +49,7 @@ describe("2.3 Наличие всех плейсхолдеров", () => {
 
 describe('2.4 Наличие чекбокса "Запомнить меня"', () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#remember")
             .then(($el) => $el[0]._modelValue)
             .should("be.false");
@@ -63,56 +61,58 @@ describe('2.4 Наличие чекбокса "Запомнить меня"', ()
 
 describe('2.5 Наличие ссылки "Забыли свой пароль?" и верное перенаправление', () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#login_forget")
             .then(($el) => $el[0].innerText)
             .should("eq", "Забыли свой пароль?");
         cy.get("#login_forget")
             .then(($el) => $el[0].href)
-            .should("eq", $site + "/forgot-password");
+            .should("eq", Env.url.domain + "/forgot-password");
         cy.get("#login_forget").click();
-        cy.url().should("eq", $site + "/forgot-password");
+        cy.url().should("eq", Env.url.domain + "/forgot-password");
     });
 });
 
 describe('2.6 Наличие ссылки "Не зарегестрированы?" и верное перенаправление', () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#registration")
             .then(($el) => $el[0].innerText)
             .should("eq", "Не зарегистрированы?"); // Проверяем что у элемента прописан нужный текст
         cy.get("#registration")
             .then(($el) => $el[0].href)
-            .should("eq", $site + "/register"); // Проверяем что у элемента прописана нужная ссылка
+            .should("eq", Env.url.domain + "/register"); // Проверяем что у элемента прописана нужная ссылка
         cy.get("#registration").click(); // Нажимаем кнопку "Уже зарегестрированы?"
-        cy.url().should("eq", $site + "/register"); // Проверяем что нас правильно перенаправило на страницу авторизации
+        cy.url().should("eq", Env.url.domain + "/register"); // Проверяем что нас правильно перенаправило на страницу авторизации
     });
 });
 
 describe('2.7 Наличие кнопки "Войти"', () => {
     it("passes", () => {
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
         cy.get("#btn_login")
             .then(($el) => $el[0].innerText)
             .should("eq", "ВОЙТИ"); //ищем элемент, проверяем что кнопка называется верно
     });
 });
 
-// _________________________3.1_________________________________
+/** 3. Авторизация*/
+
+/** 3.1 Корректная авторизация (позитивный сценарий) */
 
 describe("3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры", () => {
     it("passes", () => {
-        login($site, "test@list.ru", "123456789");
-        cy.url().should("eq", $site + "/dashboard");
+        login(Env.url.domain, Env.email, Env.password);
+        cy.url().should("eq", Env.url.domain + "/dashboard");
     });
 });
 
-// _________________________3.2_________________________________
+/** 3.2 Некорректные авторизации (негативные сценарии) */
 
 describe("3.2.1 тест. Не корретная авторизация. Email: пустой. Пароль: корретный", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
         cy.get("#email")
             .then(($el) => $el[0].validationMessage)
@@ -125,15 +125,15 @@ describe("3.2.1 тест. Не корретная авторизация. Email:
 
 describe("3.2.2 Не корретная авторизация. Не корретный email (отсутствует Знак @)", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrectlist.ru");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.withoutAtEmail);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
         cy.get("#email")
             .then(($el) => $el[0].validationMessage)
             .should(
                 "eq",
-                'Адрес электронной почты должен содержать символ "@". В адресе "notcorrectlist.ru" отсутствует символ "@".'
+                `Адрес электронной почты должен содержать символ "@". В адресе "${Env.withoutAtEmail}" отсутствует символ "@".`
             );
         cy.get("#email")
             .then(($el) => $el[0].validity.valid)
@@ -143,13 +143,13 @@ describe("3.2.2 Не корретная авторизация. Не корре�
 
 describe("3.2.3 Не корретная авторизация. Не корретный email (текст после @)", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrect@");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.withoutDomainEmail);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
         cy.get("#email")
             .then(($el) => $el[0].validationMessage)
-            .should("eq", 'Введите часть адреса после символа "@". Адрес "notcorrect@" неполный.');
+            .should("eq", `Введите часть адреса после символа "@". Адрес "${Env.withoutDomainEmail}" неполный.`);
         cy.get("#email")
             .then(($el) => $el[0].validity.valid)
             .should("be.false");
@@ -158,9 +158,9 @@ describe("3.2.3 Не корретная авторизация. Не корре�
 
 describe("3.2.4 Не корретная авторизация. Не корретный email (запятая вместо точки)", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrect@list,ru");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.withoutDotEmail);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
         cy.get("#email")
             .then(($el) => $el[0].validationMessage)
@@ -171,11 +171,11 @@ describe("3.2.4 Не корретная авторизация. Не корре�
     });
 });
 
-describe("3.2.5 Не корретная авторизация. Email: не корретный. Пароль: корректный", () => {
+describe("3.2.5 Не корретная авторизация. Email: Не зарегестрированный. Пароль: корректный", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrect@list.ru");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.unregisteredEmail);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
         // cy.get("#email_error").then(($el) => $el[0].children[0].innerText).should('eq', 'These credentials do not match our records.') // не верная херня
         cy.get("#email_error")
@@ -187,9 +187,9 @@ describe("3.2.5 Не корретная авторизация. Email: не ко
 
 describe("3.2.6 Не корретная авторизация. Email: корректный. Пароль: не корректный (короткий. 6 символов)", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrect@list.ru");
-        cy.get("#password").type("123456");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.email);
+        cy.get("#password").type(Env.shortPassword);
         cy.get("#btn_login").click();
         cy.get("#email_error")
             .then(($el) => $el[0].children[0])
@@ -200,9 +200,9 @@ describe("3.2.6 Не корретная авторизация. Email: корр�
 
 describe("3.2.7 Не корретная авторизация. Email: корректный. Пароль: не корректный (не верный пароль)", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("notcorrect@list.ru");
-        cy.get("#password").type("12345678999");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.email);
+        cy.get("#password").type(Env.incorrectPassword);
         cy.get("#btn_login").click();
         cy.get("#email_error")
             .then(($el) => $el[0].children[0])
@@ -211,43 +211,51 @@ describe("3.2.7 Не корретная авторизация. Email: корр�
     });
 });
 
-// _________________________4_________________________________
+/** 4. Открытие страницы пользователями с разными правами*/
 
 describe("4. Открытие страницы авторизации авторизованным пользователем", () => {
     it("passes", () => {
-        cy.visit($site + "/login");
-        cy.get("#email").type("test@list.ru");
-        cy.get("#password").type("123456789");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.get("#email").type(Env.email);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
-        cy.url().should("eq", $site + "/dashboard");
-        cy.visit($site + "/login");
-        cy.url().should("eq", $site + "/dashboard");
+        cy.url().should("eq", Env.url.domain + "/dashboard");
+        cy.visit(Env.url.domain + Env.url.login);
+        cy.url().should("eq", Env.url.domain + "/dashboard");
     });
 });
 
-// _________________________5_________________________________
+/** 5. Проверка cookies*/
 
-// константа не меняется, остается значение 0, которое и отображается в log
-describe("5 Cookies", () => {
+describe("5.1 Проверка создания Cookies", () => {
+    it("passes", () => {
+        cy.visit(Env.url.domain + Env.url.login);
+
+        cy.getCookie(Env.cookies.token).should("exist");
+        cy.getCookie(Env.cookies.session).should("exist");
+    });
+});
+
+describe("5.2 Cookies", () => {
     it("passes", () => {
         let token;
         let newToken;
 
-        cy.visit($site + "/login");
+        cy.visit(Env.url.domain + Env.url.login);
 
-        cy.getCookie("XSRF-TOKEN")
+        cy.getCookie(Env.cookies.token)
             .should("exist")
             .then((cookie) => {
                 token = cookie.value;
                 cy.log(token);
             });
 
-        cy.get("#email").type("test@list.ru");
-        cy.get("#password").type("123456789");
+        cy.get("#email").type(Env.email);
+        cy.get("#password").type(Env.password);
         cy.get("#btn_login").click();
-        cy.url().should("eq", $site + "/dashboard");
+        cy.url().should("eq", Env.url.domain + "/dashboard");
 
-        cy.getCookie("XSRF-TOKEN")
+        cy.getCookie(Env.cookies.token)
             .should("exist")
             .then((cookie) => {
                 newToken = cookie.value;
