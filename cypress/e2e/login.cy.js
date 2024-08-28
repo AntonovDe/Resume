@@ -1,19 +1,19 @@
-import { login } from "./command/auth.js"; // добавление (импорт) последовательности действий для авторизации пользователя
+import * as auth from "./command/auth.js"; // добавление (импорт) последовательности действий для авторизации пользователя
 import Env from "./command/Env.js";
-import Error from "./command/ErrorMessage.cy.js";
+import Error from "./command/ErrorMessage.js";
 
-login = "#login";
-btn_login = "#btn_login";
-
-email_label = "#email_label";
-email = "#email";
-password_label = "#password_label";
-password = "#password";
-remember_label = "#remember_label";
-remember = "#remember";
-
-login_forget = "#login_forget";
-registration = "#registration";
+const $ = {
+    login: "#login",
+    btn_login: "#btn_login",
+    email_label: "#email_label",
+    email: "#email",
+    password_label: "#password_label",
+    password: "#password",
+    remember_label: "#remember_label",
+    remember: "#remember",
+    login_forget: "#login_forget",
+    registration: "#registration",
+};
 
 /**
  * Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
@@ -22,13 +22,13 @@ registration = "#registration";
 
 /** 1. Проверка открытия страницы */
 
-// describe("1. Проверка перехода на сайт, на форму авторизации", () => {
-//     it("passes", () => {
-//         cy.visit(Env.url.domain);
-//         cy.get(login).click();
-//         cy.url().should("eq", Env.url.domain + Env.url.login);
-//     });
-// });
+describe("1. Проверка перехода на сайт, на форму авторизации", () => {
+    it("passes", () => {
+        cy.visit(Env.url.domain);
+        cy.get($.login).click();
+        cy.url().should("eq", Env.url.domain + Env.url.login);
+    });
+});
 
 /** 2. Проверка элементов страницы */
 
@@ -118,11 +118,11 @@ registration = "#registration";
 
 /** 3.1 Корректная авторизация (позитивный сценарий) */
 
-// describe("3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры", () => {
-//     it("passes", () => {
-//         login(Env.email.correct, Env.password.correct);
-//     });
-// });
+describe("3.1 тест. Корректная авторизация. Пароль: цифры. Имя: латиница и цифры", () => {
+    it("passes", () => {
+        auth.login(Env.email.correct, Env.password.correct);
+    });
+});
 
 /** 3.2 Некорректные авторизации (негативные сценарии) */
 
@@ -188,18 +188,18 @@ registration = "#registration";
 //     });
 // });
 
-describe("3.2.5 Не корретная авторизация. Email: Не зарегестрированный. Пароль: корректный", () => {
-    it("passes", () => {
-        cy.visit(Env.url.domain + Env.url.login);
-        cy.get(email).type(Env.email.unregistrated);
-        cy.get(password).type(Env.password.correct);
-        cy.get(btn_login).click();
-        cy.get(email_error)
-            .then(($el) => $el[0].children[0])
-            .invoke("text")
-            .should("eq", "These credentials do not match our records.");
-    });
-});
+// describe("3.2.5 Не корретная авторизация. Email: Не зарегестрированный. Пароль: корректный", () => {
+//     it("passes", () => {
+//         cy.visit(Env.url.domain + Env.url.login);
+//         cy.get(email).type(Env.email.unregistrated);
+//         cy.get(password).type(Env.password.correct);
+//         cy.get(btn_login).click();
+//         cy.get(email_error)
+//             .then(($el) => $el[0].children[0])
+//             .invoke("text")
+//             .should("eq", "These credentials do not match our records.");
+//     });
+// });
 
 // describe("3.2.6 Не корретная авторизация. Email: корректный. Пароль: не корректный (короткий. 6 символов)", () => {
 //     it("passes", () => {

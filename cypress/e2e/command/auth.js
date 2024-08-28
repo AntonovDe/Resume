@@ -1,8 +1,7 @@
-import Env from "./command/Env.js";
+import Env from "./Env.js";
 
 /**
  * Функция ввода данных для login
- * @param {string} site url сайта
  * @param {string} email email для входа
  * @param {string} password пароль для входа
  */
@@ -21,7 +20,7 @@ exports.login = (email, password) => {
  * @param {string} password пароль для регистрации
  * @param {string} password_confirmation повторный пароль для регистрации
  */
-exports.login = (name, email, password, password_confirmation) => {
+exports.registration = (name, email, password, password_confirmation) => {
     cy.visit(Env.url.domain + Env.url.register);
     cy.get("#name").type(name);
     cy.get("#email").type(email);
