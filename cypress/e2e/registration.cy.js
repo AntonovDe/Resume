@@ -1,7 +1,9 @@
 // Тесты формы регистрации для сайта //indydemo.cg28577.tmweb.ru
 // Команда в terminal для запуска Cypress: npx cypress open
 
-import Env from "./command/Env.cy";
+import Env from "./command/Env.js";
+
+
 
 const $site = "https://indydemo.cg28577.tmweb.ru"; // Переменная для основного сайта
 const random = Cypress._.random(0, 1e8); // Создание уникального номера id
