@@ -70,8 +70,4 @@ export default class Env {
         /** Не подходящий пароль*/
         incorrect: "12345678999",
     };
-
-    static testfunct = (email) => {
-        return `Введите часть адреса после символа "@". Адрес "${email}" неполный.`;
-    };
 }
