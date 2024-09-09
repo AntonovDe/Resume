@@ -2,7 +2,7 @@ import * as auth from "./command/auth.js"; // добавление (импорт
 import Env from "./command/Env.js"; // добавление (импорт) класса с быстрым набором логинов, паролей, ссылок
 import Error from "./command/ErrorMessage.js"; // добавление (импорт) класса с сообщениями об ошибках
 
-/** Список id элементов на странице авторизации для поиска*/
+/** Локаторы на странице авторизации для поиска*/
 const $ = {
     login: "#login",
     btn_login: "#btn_login",

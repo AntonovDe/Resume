@@ -3,7 +3,7 @@ import Error from "./command/ErrorMessage.js"; // добавление (импо
 
 const random = Cypress._.random(0, 1e8); // Создание уникального id номера
 
-/** Список id элементов (или других параметров) на странице регистрации для поиска*/
+/** Локаторы на странице регистрации для поиска*/
 const $ = {
     site: "#site",
     register: "#register",
