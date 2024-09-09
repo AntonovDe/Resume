@@ -59,15 +59,48 @@ export default class Env {
         unregistrated: "unregistrated@list.ru",
     };
 
+    /** email для регистрации */
+    static emailReg = {
+        /** Корректная почта регистрации */
+        correct: ($id) => {
+            return `test${$id}@list.ru`;
+        },
+
+        /** Не корректная почта. Без домена и @ */
+        withoutDomainAndAt: ($id) => {
+            return `test${$id}`;
+        },
+        /** Не корректная почта. Без домена */
+        withoutDomain: ($id) => {
+            return `test${$id}@`;
+        },
+        /** Не корректная почта. Без домена и знака @*/
+        withoutAt: ($id) => {
+            return `test${$id}list.ru`;
+        },
+    };
+
     /** password */
     static password = {
         /** Корректный пароль */
         correct: "123456789",
+
+        /** Корректный пароль с буквами и символами */
+        correctWithСharacter: "123456asd/",
 
         /** Не корректный пароль. Короткий пароль */
         short: "123456",
 
         /** Не подходящий пароль*/
         incorrect: "12345678999",
+    };
+
+    /** name */
+    static name = {
+        /** Корректное имя */
+        correct: "AuthoTest",
+
+        /** Корректное имя на русском */
+        correctRus: "Авто тест имя",
     };
 }
