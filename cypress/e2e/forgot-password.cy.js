@@ -85,8 +85,7 @@ describe("3.2.1 Не корректный сброс пароля. Почта: �
         cy.get($.form)
             .then(($el) => $el[0].children[0])
             .last()
-            .should("contain", Error.forget.wrong); // Оба рабочих варианта
-        //   cy.get("form").then(($el) => $el[0].children[0]).invoke('text').should('contain', message.wrong) // Оба рабочих варианта
+            .should("contain", Error.forget.wrong); 
     });
 });
 
@@ -170,6 +169,6 @@ describe("3.2.7 Не корректный сброс пароля. Не корр
         cy.get($.form)
             .then(($el) => $el[0].children[0])
             .invoke("text")
-            .should("contain", "We can't find a user with that email address.");
+            .should("contain", Error.forget.notFind);
     });
 });

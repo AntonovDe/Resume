@@ -55,6 +55,7 @@ export default class Error {
     static forget = {
         correct: "We have emailed your password reset link.",
         wrong: "Please wait before retrying.",
+        notFind: "We can't find a user with that email address."
     };
 }
 
