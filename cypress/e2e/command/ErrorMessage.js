@@ -11,19 +11,19 @@ export default class Error {
 
     /** email */
     static email = {
-        /** Сообщение об отсутствии символа @ и домейна*/
-        withoutDomainAndAt: (email) => {
-            return `Адрес электронной почты должен содержать символ "@". В адресе "${email}" отсутствует символ "@".`;
-        },
-
         /** Сообщение об отсутствии домейна*/
-        withoutDomain: (email) => {
-            return `Введите часть адреса после символа "@". Адрес "${email}" неполный.`;
+        withoutDomain: (emailAndId) => {
+            return `Введите часть адреса после символа "@". Адрес "${emailAndId}" неполный.`;
         },
 
         /** Сообщение об отсутствии символа @*/
-        withoutAt: (email) => {
-            return `Адрес электронной почты должен содержать символ "@". В адресе "${email}" отсутствует символ "@".`;
+        withoutAt: (emailAndId) => {
+            return `Адрес электронной почты должен содержать символ "@". В адресе "${emailAndId}" отсутствует символ "@".`;
+        },
+
+        /** Сообщение об отсутствии символа @ и домейна*/
+        withoutDomainAndAt: (emailAndId) => {
+            return `Адрес электронной почты должен содержать символ "@". В адресе "${emailAndId}" отсутствует символ "@".`;
         },
 
         /** Сообщение о наличии запятой вместо точки*/
@@ -38,13 +38,23 @@ export default class Error {
 
     /** password */
     static password = {
-    
         /** Слишком короткий пароль */
         short: `These credentials do not match our records.`,
 
         /** Сообщение о регистрации на уже зарегестрированную почту*/
         incorrect: `These credentials do not match our records.`,
-        
+
+        /** Сообщение о том, что пароль должен содержать 8 и более символов */
+        more8: `The password field must be at least 8 characters.`,
+
+        /** Сообщение о не верном проверочном пароле*/
+        confirmation: `The password field confirmation does not match.`,
+    };
+
+    /** ошибки для страницы восстановления пароля */
+    static forget = {
+        correct: "We have emailed your password reset link.",
+        wrong: "Please wait before retrying.",
     };
 }
 
