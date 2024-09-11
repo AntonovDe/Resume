@@ -15,8 +15,7 @@ const $ = {
     remember: "#remember",
     login_forget: "#login_forget",
     registration: "#registration",
-    svg: "svg",
-    а,
+    svg: "svg"
 };
 
 /**
@@ -40,7 +39,7 @@ describe("2.1 Наличие лого и верная ссылка на него
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.svg)
-            .then(($el) => $el[0].attributes[1].value)
+            .then((el) => el[0].attributes[1].value)
             .should("eq", Env.image.logo);
     });
 });
@@ -49,10 +48,10 @@ describe("2.2 Наличие всех текстов, заголовков", () 
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.email_label)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "Эл. почта");
         cy.get($.password_label)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "Пароль");
     });
 });
@@ -61,10 +60,10 @@ describe("2.3 Наличие всех плейсхолдеров", () => {
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.email)
-            .then(($el) => $el[0].placeholder)
+            .then((el) => el[0].placeholder)
             .should("eq", "адрес эл. почты");
         cy.get($.password)
-            .then(($el) => $el[0].placeholder)
+            .then((el) => el[0].placeholder)
             .should("eq", "пароль");
     });
 });
@@ -73,10 +72,10 @@ describe('2.4 Наличие чекбокса "Запомнить меня"', ()
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.remember)
-            .then(($el) => $el[0]._modelValue)
+            .then((el) => el[0]._modelValue)
             .should("be.false");
         cy.get($.remember_label)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "Запомнить меня");
     });
 });
@@ -85,10 +84,10 @@ describe('2.5 Наличие ссылки "Забыли свой пароль?" 
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.login_forget)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "Забыли свой пароль?");
         cy.get($.login_forget)
-            .then(($el) => $el[0].href)
+            .then((el) => el[0].href)
             .should("eq", Env.url.domain + Env.url.forgot);
         cy.get($.login_forget).click();
         cy.url().should("eq", Env.url.domain + Env.url.forgot);
@@ -99,10 +98,10 @@ describe('2.6 Наличие ссылки "Не зарегестрированы
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.registration)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "Не зарегистрированы?");
         cy.get($.registration)
-            .then(($el) => $el[0].href)
+            .then((el) => el[0].href)
             .should("eq", Env.url.domain + Env.url.register);
         cy.get($.registration).click();
         cy.url().should("eq", Env.url.domain + Env.url.register);
@@ -113,7 +112,7 @@ describe('2.7 Наличие кнопки "Войти"', () => {
     it("passes", () => {
         cy.visit(Env.url.domain + Env.url.login);
         cy.get($.btn_login)
-            .then(($el) => $el[0].innerText)
+            .then((el) => el[0].innerText)
             .should("eq", "ВОЙТИ");
     });
 });
@@ -134,10 +133,10 @@ describe("3.2.1 тест. Не корретная авторизация. Email:
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email)
-            .then(($el) => $el[0].validationMessage)
+            .then((el) => el[0].validationMessage)
             .should("eq", Error.general.empty);
         cy.get($.email)
-            .then(($el) => $el[0].validity.valid)
+            .then((el) => el[0].validity.valid)
             .should("be.false");
     });
 });
@@ -150,10 +149,10 @@ describe("3.2.2 Не корретная авторизация. Не корре�
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email)
-            .then(($el) => $el[0].validationMessage)
+            .then((el) => el[0].validationMessage)
             .should("eq", Error.email.withoutAt(emailAndId));
         cy.get($.email)
-            .then(($el) => $el[0].validity.valid)
+            .then((el) => el[0].validity.valid)
             .should("be.false");
     });
 });
@@ -166,10 +165,10 @@ describe("3.2.3 Не корретная авторизация. Не корре�
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email)
-            .then(($el) => $el[0].validationMessage)
+            .then((el) => el[0].validationMessage)
             .should("eq", Error.email.withoutDomainAndAt(emailAndId));
         cy.get($.email)
-            .then(($el) => $el[0].validity.valid)
+            .then((el) => el[0].validity.valid)
             .should("be.false");
     });
 });
@@ -182,10 +181,10 @@ describe("3.2.4 Не корретная авторизация. Не корре�
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email)
-            .then(($el) => $el[0].validationMessage)
+            .then((el) => el[0].validationMessage)
             .should("eq", Error.email.withoutDomain(emailAndId));
         cy.get($.email)
-            .then(($el) => $el[0].validity.valid)
+            .then((el) => el[0].validity.valid)
             .should("be.false");
     });
 });
@@ -197,10 +196,10 @@ describe("3.2.5 Не корретная авторизация. Не корре�
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email)
-            .then(($el) => $el[0].validationMessage)
+            .then((el) => el[0].validationMessage)
             .should("eq", Error.email.withoutDot);
         cy.get($.email)
-            .then(($el) => $el[0].validity.valid)
+            .then((el) => el[0].validity.valid)
             .should("be.false");
     });
 });
@@ -212,7 +211,7 @@ describe("3.2.6 Не корретная авторизация. Email: Не за
         cy.get($.password).type(Env.password.correct);
         cy.get($.btn_login).click();
         cy.get($.email_error)
-            .then(($el) => $el[0].children[0])
+            .then((el) => el[0].children[0])
             .invoke("text")
             .should("eq", Error.email.unregistrated);
     });
@@ -226,7 +225,7 @@ describe("3.2.7 Не корретная авторизация. Email: корр�
         cy.get($.btn_login).click();
         cy.wait(2000);
         cy.get($.email_error)
-            .then(($el) => $el[0].textContent)
+            .then((el) => el[0].textContent)
             .should("eq", Error.password.short);
     });
 });
@@ -239,7 +238,7 @@ describe("3.2.8 Не корретная авторизация. Email: корр�
         cy.get($.btn_login).click();
         cy.wait(2000);
         cy.get($.email_error)
-            .then(($el) => $el[0].textContent)
+            .then((el) => el[0].textContent)
             .should("eq", Error.password.incorrect);
     });
 });
