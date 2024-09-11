@@ -21,6 +21,10 @@ export default class Env {
 
         /** Главная страница */
         main: "/dashboard",
+
+        /** Страница с картинками */
+        images: "/images",
+
     };
 
     /** Куки */
@@ -36,6 +40,7 @@ export default class Env {
     static image = {
         /** Ссылка логотипа */
         logo: "http://www.w3.org/2000/svg",
+        defaultAva: "https://indydemo.cg28577.tmweb.ru/build/assets/avatar-CPjtKgoM.png",
     };
 
     /** email */
