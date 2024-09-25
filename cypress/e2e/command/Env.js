@@ -5,7 +5,7 @@ export default class Env {
     /** routes (DOMAIN, URL) */
     static url = {
         /** Основной сайт */
-        domain: "https://indydemo.cg28577.tmweb.ru",
+        domain: "Здесь был адрес сайта",
 
         /** Страница авторизации */
         login: "/login",
@@ -39,7 +39,7 @@ export default class Env {
     static image = {
         /** Ссылка логотипа */
         logo: "http://www.w3.org/2000/svg",
-        defaultAva: "https://indydemo.cg28577.tmweb.ru/build/assets/avatar-CPjtKgoM.png",
+        defaultAva: url.domain + "/build/assets/avatar-CPjtKgoM.png",
     };
 
     /** email */
