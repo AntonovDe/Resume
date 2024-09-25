@@ -24,7 +24,6 @@ export default class Env {
 
         /** Страница с картинками */
         images: "/images",
-
     };
 
     /** Куки */
@@ -47,6 +46,9 @@ export default class Env {
     static email = {
         /** Корректная почта */
         correct: "test@list.ru",
+
+        /** Новая корректная почта */
+        newCorrect: "test2@list.ru",
 
         /** Не корректная почта. Без домена и @ */
         withoutDomainAndAt: "notcorrect",
@@ -90,6 +92,9 @@ export default class Env {
         /** Корректный пароль */
         correct: "123456789",
 
+        /** Новый корректный пароль */
+        newCorrect: "123456789",
+
         /** Корректный пароль с буквами и символами */
         correctWithСharacter: "123456asd/",
 
@@ -105,7 +110,34 @@ export default class Env {
         /** Корректное имя */
         correct: "AuthoTest",
 
+        /** Новое корректное имя */
+        newCorrect: "TestAutho",
+
         /** Корректное имя на русском */
         correctRus: "Авто тест имя",
+    };
+
+    /** info для профиля */
+    static info = {
+        /** Никнейм */
+        nick: "AT",
+
+        /** почта для связи */
+        bioEmail: "testInfo@list.ru",
+
+        /** телефон */
+        phone: "+7(900)12345678",
+
+        /** работа */
+        job: "authoTester",
+
+        /** город */
+        city: "Москва",
+
+        /** ссылка на профиль */
+        link: "test",
+
+        /** описание в профиле */
+        description: "Тестовый аккаунт. Тестовая запись",
     };
 }

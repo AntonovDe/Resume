@@ -30,3 +30,11 @@ exports.registration = (name, email, password, password_confirmation) => {
     cy.url().should("eq", Env.url.domain + Env.url.main);
 };
 
+/**
+ * Функция выхода из профиля
+ */
+exports.logOut = () => {
+    cy.visit(Env.url.domain + Env.url.main);
+    cy.get("button[type='button']").click();
+    cy.get('[class="pt-1"]').contains("Выйти").click();
+};
