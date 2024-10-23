@@ -45,10 +45,10 @@ export default class Env {
     /** email */
     static email = {
         /** Корректная почта */
-        correct: "test@list.ru",
+        correct: "***",
 
         /** Новая корректная почта */
-        newCorrect: "test2@list.ru",
+        newCorrect: "***",
 
         /** Не корректная почта. Без домена и @ */
         withoutDomainAndAt: "notcorrect",
@@ -70,39 +70,39 @@ export default class Env {
     static emailReg = {
         /** Корректная почта регистрации */
         correct: ($id) => {
-            return `test${$id}@list.ru`;
+            return `***${$id}***`;
         },
 
         /** Не корректная почта. Без домена и @ */
         withoutDomainAndAt: ($id) => {
-            return `test${$id}`;
+            return `***${$id}`;
         },
         /** Не корректная почта. Без домена */
         withoutDomain: ($id) => {
-            return `test${$id}@`;
+            return `***${$id}@`;
         },
         /** Не корректная почта. Без домена и знака @*/
         withoutAt: ($id) => {
-            return `test${$id}list.ru`;
+            return `***${$id}list.ru`;
         },
     };
 
     /** password */
     static password = {
         /** Корректный пароль */
-        correct: "123456789",
+        correct: "***",
 
         /** Новый корректный пароль */
-        newCorrect: "123456789",
+        newCorrect: "***",
 
         /** Корректный пароль с буквами и символами */
-        correctWithСharacter: "123456asd/",
+        correctWithСharacter: "***",
 
         /** Не корректный пароль. Короткий пароль */
-        short: "123456",
+        short: "***",
 
         /** Не подходящий пароль*/
-        incorrect: "12345678999",
+        incorrect: "***",
     };
 
     /** name */
@@ -123,7 +123,7 @@ export default class Env {
         nick: "AT",
 
         /** почта для связи */
-        bioEmail: "testInfo@list.ru",
+        bioEmail: "***",
 
         /** телефон */
         phone: "+7(900)12345678",
